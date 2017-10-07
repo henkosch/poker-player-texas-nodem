@@ -14,6 +14,45 @@ function isPair(cards) {
     return cards[0].rank == cards[1].rank;
 }
 
+function hasNumRank(cards, num) {
+    let hash = {};
+    cards.forEach(card => {
+        if (hash[card.rank]) hash[card.rank]++;
+        else hash[card.rank] = 1;
+    });
+    for (let rank in hash) {
+        if (hash[rank] == num) return rank;
+    }
+    return null;
+}
+
+function getNumRanks(cards, num) {
+    let hash = {};
+    cards.forEach(card => {
+        if (hash[card.rank]) hash[card.rank]++;
+        else hash[card.rank] = 1;
+    });
+    let groups = [];
+    for (let rank in hash) {
+        if (hash[rank] == num) {
+            groups.push(rank);
+        }
+    }
+    return groups;
+}
+
+function getPairs(cards) {
+    return getNumRanks(cards, 2);
+}
+
+function hasPair(cards) {
+    return hasNumRank(cards, 2);
+}
+
+function hasDrill(cards) {
+    return hasNumRank(cards, 2);
+}
+
 function sameColor(cards) {
     return cards[0].suit == cards[1].suit;
 }
@@ -62,64 +101,107 @@ function decide(gameState) {
     const cards = me.hole_cards;
     const playerCount = gameState.players.length;
 
-    const sneaky = findByName(gameState, 'Sneaky');
-    const sneakyActive = sneaky.status == "active";
-    const kamikazeVeryGoodForUs = cardsContainsRank(cards, "A") || cardsContainsRank(cards, "K");
-    const kamikazeON = !sneakyActive || kamikazeVeryGoodForUs;
+    const isPreFlop = gameState.community_cards.length == 0;
 
-    if (kamikazeON && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
-        return {
-            action: "allIn",
-            strategy: "kamikaze"
-        };
-    }
+    if (isPreFlop) {
+        // Pre flop
 
-    if (isFlush(allCards(gameState))) {
-        return {
-            action: "allIn",
-            strategy: "flush"
-        };
-    }
+        const sneaky = findByName(gameState, 'Sneaky');
+        const sneakyActive = sneaky.status == "active";
+        const kamikazeVeryGoodForUs = cardsContainsRank(cards, "A") || cardsContainsRank(cards, "K");
+        const kamikazeON = !sneakyActive || kamikazeVeryGoodForUs;
 
-    if (sameColor(cards) && onlyFigures(cards)) {
-        return {
-            action: "allIn",
-            strategy: "concrete"
-        };
-    }
-
-    if (isAcePair(cards)) {
-        return {
-            action: "allIn",
-            strategy: "acePair"
-        };
-    }
-
-    if (isPair(cards)) {
-        const sum = cardSum(cards);
-        if ((playerCount == 5 && sum > 10) ||
-            (playerCount == 4 && sum > 10) ||
-            (playerCount == 3 && sum > 0) ||
-            (playerCount == 2 && sum > 0)) {
+        if (kamikazeON && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
             return {
                 action: "allIn",
-                strategy: "pair"
+                strategy: "kamikaze"
             };
         }
-    }
 
-    if (sameColor(cards) && isNeighbors(cards) && playerCount <= 3) {
-        return {
-            action: "allIn",
-            strategy: "expectStraightFlush"
-        };
-    }
+        if (isFlush(allCards(gameState))) {
+            return {
+                action: "allIn",
+                strategy: "flush"
+            };
+        }
 
-    if (gameState.minimum_raise <= 20) {
-        return {
-            action: "call",
-            strategy: "limp"
-        };
+        if (sameColor(cards) && onlyFigures(cards)) {
+            return {
+                action: "allIn",
+                strategy: "concrete"
+            };
+        }
+
+        if (isAcePair(cards)) {
+            return {
+                action: "allIn",
+                strategy: "acePair"
+            };
+        }
+
+        if (isPair(cards)) {
+            const sum = cardSum(cards);
+            if ((playerCount == 5 && sum > 10) ||
+                (playerCount == 4 && sum > 10) ||
+                (playerCount == 3 && sum > 0) ||
+                (playerCount == 2 && sum > 0)) {
+                return {
+                    action: "allIn",
+                    strategy: "pair"
+                };
+            }
+        }
+
+        if (sameColor(cards) && isNeighbors(cards) && playerCount <= 3) {
+            return {
+                action: "allIn",
+                strategy: "expectStraightFlush"
+            };
+        }
+
+        if (gameState.minimum_raise <= 20) {
+            return {
+                action: "call",
+                strategy: "limp"
+            };
+        }
+    } else {
+        // Post flop
+
+        if (isFlush(allCards(gameState))) {
+            return {
+                action: "allIn",
+                strategy: "flush"
+            };
+        }
+
+        if (isPair(cards)) {
+            const sum = cardSum(cards);
+            if ((playerCount == 5 && sum > 10) ||
+                (playerCount == 4 && sum > 10) ||
+                (playerCount == 3 && sum > 0) ||
+                (playerCount == 2 && sum > 0)) {
+                return {
+                    action: "allIn",
+                    strategy: "pair"
+                };
+            }
+        }
+
+        if (!hasPair(gameState.community_cards) && hasPair(allCards(gameState))) {
+            return {
+                action: "allIn",
+                strategy: "communityPair"
+            };
+        }
+
+        const pairs = getNumRanks(cards, 2);
+        if (pairs.length == 2) {
+            return {
+                action: "allIn",
+                strategy: "twoPairs"
+            };
+        }
     }
 
     return {
@@ -139,7 +221,7 @@ function makeBet(gameState, bet) {
 
     switch (decision.action) {
         case "allIn":
-            return bet(allInAmount_v0);
+            return bet(allInAmount_v2);
         case "call":
             return bet(gameState.current_buy_in);
         case "fold":
