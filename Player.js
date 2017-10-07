@@ -4,7 +4,7 @@ const poker = require("./poker.js");
 
 class Player {
   static get VERSION() {
-    return '0.1';
+    return 'Kamikaze!!!';
   }
 
   static betRequest(gameState, bet) {
