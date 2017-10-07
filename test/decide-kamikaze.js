@@ -3,11 +3,11 @@ const chai = require('chai');
 
 describe('Poker', () => {
     describe('#decide()', () => {
-        it('Decide', () => {
+        it('Kamikaze', () => {
             chai.assert.deepEqual(
                 {
                     action: 'allIn',
-                    strategy: 'pair'
+                    strategy: 'kamikaze'
                 },
                 poker.decide(
                     {
@@ -45,6 +45,7 @@ describe('Poker', () => {
                             }
                         ],
                         "community_cards": [],
+                        "minimum_raise": 30
                     }
                 )
             );
