@@ -46,7 +46,7 @@ describe('Poker', () => {
                     return bet;
                 }
             );
-            chai.assert.equal(20, result);
+            chai.assert.equal(5000, result);
         });
     });
 });
