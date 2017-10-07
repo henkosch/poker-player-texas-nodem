@@ -20,8 +20,10 @@ class Player {
     console.log(gameState)
     try {
       const me = findMe(gameState);
-      const cards = me.hole_cards;
+      console.log("ME", me);
       
+      const cards = me.hole_cards;
+
       if (onlyFigures(cards)) {
         console.log("round ", gameState.round, " : ", "onlyFigures");
         bet(5000);
