@@ -30,6 +30,11 @@ function makeBet(gameState, bet) {
 
   const cards = me.hole_cards;
 
+  if (onlyFigures(cards)) console.log("round ", gameState.round, " : ", "onlyFigures");
+  if (isPair(cards)) console.log("round ", gameState.round, " : ", "isPair");
+  if (sameColor(cards)) console.log("round ", gameState.round, " : ", "sameColor");
+  if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
+
   if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
     console.log("round ", gameState.round, " : ", "all in");
     bet(5000);
