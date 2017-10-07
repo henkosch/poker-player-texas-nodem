@@ -2,12 +2,12 @@ const _ = require('lodash');
 
 const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 
-function findMe(gameState) {
-    return findByName('Texas Nodem');
-}
-
 function findByName(gameState, name) {
     return _.find(gameState.players, player => player.name == name);
+}
+
+function findMe(gameState) {
+    return findByName('Texas Nodem');
 }
 
 function isPair(cards) {
