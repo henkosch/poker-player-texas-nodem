@@ -70,10 +70,10 @@ function makeBet(gameState, bet) {
         return bet(5000);
     }
 
-    if (gameState.minimum_raise <= 20) {
+    /*if (gameState.minimum_raise <= 20) {
         console.log("round ", gameState.round, " : ", "20 to minimum_raise", gameState.minimum_raise);
         return bet(gameState.minimum_raise);
-    }
+    }*/
 
     if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
         console.log("round ", gameState.round, " : ", "ALL in");
