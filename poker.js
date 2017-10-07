@@ -14,6 +14,22 @@ function isPair(cards) {
     return cards[0].rank == cards[1].rank;
 }
 
+function hasStraight(cards, num) {
+    const sortedCards = _.sortBy(cards, card => ranks.indexOf(card.rank));
+    let maxStraight = 1;
+    for (let i = 1; i < sortedCards.length; i++) {
+        const prev = ranks.indexOf(sortedCards[i-1].rank);
+        const cur = ranks.indexOf(sortedCards[i].rank);
+        if (cur - prev == 1) {
+            maxStraight++;
+            if (maxStraight >= num) return sortedCards[i].rank;
+        } else {
+            maxStraight = 1;
+        }
+    }
+    return null;
+}
+
 function hasNumRank(cards, num) {
     let hash = {};
     cards.forEach(card => {
@@ -202,6 +218,27 @@ function decide(gameState) {
                 strategy: "postFlopTwoPairs"
             };
         }
+
+        if (gameState.community_cards.length == 3 && hasStraight(allCards(gameState), 4)) {
+            return {
+                action: "allIn",
+                strategy: "postFlopStraightChance3"
+            };
+        }
+
+        if (gameState.community_cards.length == 4 && hasStraight(allCards(gameState), 4)) {
+            return {
+                action: "allIn",
+                strategy: "postFlopStraightChance4"
+            };
+        }
+
+        if (gameState.community_cards.length == 5 && hasStraight(allCards(gameState), 5)) {
+            return {
+                action: "allIn",
+                strategy: "postFlopStraight5"
+            };
+        }
     }
 
     return {
@@ -243,5 +280,6 @@ module.exports = {
     decide,
     findByName,
     cardSum,
-    hasPair
+    hasPair,
+    hasStraight
 };
