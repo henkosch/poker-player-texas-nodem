@@ -71,7 +71,8 @@ function decide(gameState) {
     const cards = me.hole_cards;
     const playerCount = gameState.players.length;
 
-    const sneakyActive = findByName('Sneaky').status == "active";
+    const sneaky = findByName(gameState, 'Sneaky');
+    const sneakyActive = sneaky.status == "active";
     const kamikazeON = !sneakyActive;
 
     if (kamikazeON && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
