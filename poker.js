@@ -45,14 +45,12 @@ function isFlush(cards) {
     return false;
 }
 
-function makeBet(gameState, bet) {
+function debugState(gameState) {
     const me = findMe(gameState);
-    console.log("ME", me);
-
     const cards = me.hole_cards;
     const playerCount = gameState.players.length;
 
-    console.log("--- VARIABLES ---");
+    console.log("--- STATE ---");
 
     if (onlyFigures(cards)) console.log("round ", gameState.round, " : ", "onlyFigures");
     if (isPair(cards)) console.log("round ", gameState.round, " : ", "isPair");
@@ -60,35 +58,74 @@ function makeBet(gameState, bet) {
     if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
     if (isAcePair(cards)) console.log("round ", gameState.round, " : ", "isAcePair");
     console.log("round ", gameState.round, " : ", "playerCount", playerCount);
+}
 
+function decide(gameState) {
     console.log("--- DECIDE ---");
 
-    const danger = true;
+    const me = findMe(gameState);
+    const cards = me.hole_cards;
+    const playerCount = gameState.players.length;
 
-    if (danger && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
-        console.log("round ", gameState.round, " : ", "ALL in due to minimum_raise", gameState.minimum_raise);
-        return bet(5000);
+    const kamikazeON = false;
+
+    if (kamikazeON && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
+        return {
+            action: "allIn",
+            strategy: "kamikaze"
+        };
     }
 
     if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
-        console.log("round ", gameState.round, " : ", "ALL in");
-        return bet(5000);
+        return {
+            action: "allIn",
+            strategy: "concrete"
+        };
     }
 
-    if (sameColor(cards) && isNeighbors(cards)) {
-        if (playerCount <= 3 || isAcePair(cards)) {
-            console.log("round ", gameState.round, " : ", "ALL in");
-            return bet(5000);
-        }
+    if (sameColor(cards) && isNeighbors(cards) && playerCount <= 3) {
+        return {
+            action: "allIn",
+            strategy: "expectFlush"
+        };
+    }
+
+    if (isAcePair(cards)) {
+        return {
+            action: "allIn",
+            strategy: "acePair"
+        };
     }
 
     if (gameState.minimum_raise <= 20) {
-        console.log("round ", gameState.round, " : ", "20 to minimum_raise", gameState.minimum_raise);
-        return bet(gameState.current_buy_in);
+        return {
+            action: "call",
+            strategy: "limp"
+        };
     }
 
-    console.log("round ", gameState.round, " : ", "NOT good");
-    return bet(0);
+    return {
+        action: "fold",
+        strategy: "none"
+    };
+}
+
+function makeBet(gameState, bet) {
+    debugState(gameState);
+    
+    const decision = decide(gameState);
+
+    console.log("round ", gameState.round, " : ", "action = ", decision.action, "strategy = ", decision.strategy);
+
+    switch (decision.action) {
+        case "allIn":
+            return bet(5000);
+        case "call":
+            return bet(gameState.current_buy_in);
+        case "fold":
+        default:
+            return bet(0);
+    }
 }
 
 module.exports = {
