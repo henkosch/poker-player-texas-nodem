@@ -7,6 +7,10 @@ function findMe(gameState) {
 const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "A", "Q", "K", "J"]
 const figures = ["A", "Q", "K", "J"];
 
+function isPair(cards) {
+  return cards[0].rank == cards[1].rank;
+}
+
 function onlyFigures(cards) {
   return _.every(cards, card => ranks.indexOf(card.rank) > 7);
 }
@@ -21,10 +25,10 @@ class Player {
     try {
       const me = findMe(gameState);
       console.log("ME", me);
-      
+
       const cards = me.hole_cards;
 
-      if (onlyFigures(cards)) {
+      if (onlyFigures(cards) || isPair(cards)) {
         console.log("round ", gameState.round, " : ", "onlyFigures");
         bet(5000);
       } else {
