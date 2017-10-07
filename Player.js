@@ -17,7 +17,7 @@ class Player {
   }
 
   static betRequest(gameState, bet) {
-    console.log(gameState);
+    console.log(JSON.stringify(gameState));
     try {
       const me = me(gameState);
       const cards = me.hole_cards;
