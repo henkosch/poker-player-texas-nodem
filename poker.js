@@ -3,7 +3,11 @@ const _ = require('lodash');
 const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 
 function findMe(gameState) {
-    return _.find(gameState.players, player => player.name == 'Texas Nodem');
+    return findByName('Texas Nodem');
+}
+
+function findByName(gameState, name) {
+    return _.find(gameState.players, player => player.name == name);
 }
 
 function isPair(cards) {
@@ -67,7 +71,8 @@ function decide(gameState) {
     const cards = me.hole_cards;
     const playerCount = gameState.players.length;
 
-    const kamikazeON = false;
+    const sneakyActive = findByName('Sneaky').status == "active";
+    const kamikazeON = !sneakyActive;
 
     if (kamikazeON && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
         return {
