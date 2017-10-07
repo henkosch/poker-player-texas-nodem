@@ -54,8 +54,6 @@ function isFlush(cards) {
 }
 
 function decide(gameState) {
-    console.log("--- DECIDE ---");
-
     const me = findMe(gameState);
     const cards = me.hole_cards;
     const playerCount = gameState.players.length;
