@@ -36,8 +36,12 @@ function makeBet(gameState, bet) {
   if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
 
   if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
-    console.log("round ", gameState.round, " : ", "all in");
-    bet(5000);
+    if (gameState.players.length <= 3) {
+      console.log("round ", gameState.round, " : ", "all in");
+      bet(5000);
+    } else {
+      bet(0);
+    }
   } else {
     console.log("round ", gameState.round, " : ", "NOT onlyFigures");
     bet(0);
