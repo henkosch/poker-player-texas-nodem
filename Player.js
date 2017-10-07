@@ -1,5 +1,16 @@
 const _ = require('lodash');
 
+function me(gameState) {
+  return _.find(gameState.players, player => player.name == 'Texas Nodem');
+}
+
+const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "A", "Q", "K", "J"]
+const figures = ["A", "Q", "K", "J"];
+
+function onlyFigures(cards) {
+  return _.every(cards, card => ranks.indexOf(card.rank) > 7);
+}
+
 class Player {
   static get VERSION() {
     return '0.1';
@@ -27,14 +38,3 @@ class Player {
 }
 
 module.exports = Player;
-
-function me(gameState) {
-  return _.find(gameState.players, player => player.name == 'Texas Nodem');
-}
-
-const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "A", "Q", "K", "J"]
-const figures = ["A", "Q", "K", "J"];
-
-function onlyFigures(cards) {
-  return _.every(cards, card => ranks.indexOf(card.rank) > 7);
-}
