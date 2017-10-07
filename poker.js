@@ -63,9 +63,16 @@ function makeBet(gameState, bet) {
 
     console.log("--- DECIDE ---");
 
-    if (gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
+    const danger = false;
+
+    if (danger && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
         console.log("round ", gameState.round, " : ", "ALL in due to minimum_raise", gameState.minimum_raise);
         return bet(5000);
+    }
+
+    if (gameState.minimum_raise <= 20) {
+        console.log("round ", gameState.round, " : ", "20 to minimum_raise", gameState.minimum_raise);
+        return bet(gameState.minimum_raise);
     }
 
     if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
