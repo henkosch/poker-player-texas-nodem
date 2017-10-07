@@ -37,6 +37,10 @@ function allCards(gameState) {
     return gameState.community_cards.concat(myCards);
 }
 
+function cardSum(cards) {
+    return _.sum(cards.map(card => ranks.indexOf(card.rank)));
+}
+
 function isFlush(cards) {
     let hash = {};
     cards.forEach(card => {
@@ -47,21 +51,6 @@ function isFlush(cards) {
         if (hash[suit] >= 5) return true;
     }
     return false;
-}
-
-function debugState(gameState) {
-    const me = findMe(gameState);
-    const cards = me.hole_cards;
-    const playerCount = gameState.players.length;
-
-    console.log("--- STATE ---");
-
-    if (onlyFigures(cards)) console.log("round ", gameState.round, " : ", "onlyFigures");
-    if (isPair(cards)) console.log("round ", gameState.round, " : ", "isPair");
-    if (sameColor(cards)) console.log("round ", gameState.round, " : ", "sameColor");
-    if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
-    if (isAcePair(cards)) console.log("round ", gameState.round, " : ", "isAcePair");
-    console.log("round ", gameState.round, " : ", "playerCount", playerCount);
 }
 
 function decide(gameState) {
@@ -82,11 +71,24 @@ function decide(gameState) {
         };
     }
 
-    if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
+    if (sameColor(cards) && onlyFigures(cards)) {
         return {
             action: "allIn",
             strategy: "concrete"
         };
+    }
+
+    if (isPair(cards)) {
+        const sum = cardSum(cards);
+        if ((playerCount == 5 && sum > 16) ||
+            (playerCount == 4 && sum > 16) ||
+            (playerCount == 3 && sum > 0) ||
+            (playerCount == 2 && sum > 0)) {
+            return {
+                action: "allIn",
+                strategy: "pair"
+            };
+        }
     }
 
     if (sameColor(cards) && isNeighbors(cards) && playerCount <= 3) {
@@ -117,8 +119,6 @@ function decide(gameState) {
 }
 
 function makeBet(gameState, bet) {
-    debugState(gameState);
-
     const decision = decide(gameState);
 
     console.log("round ", gameState.round, " : ", "action = ", decision.action, "strategy = ", decision.strategy);
@@ -145,5 +145,6 @@ module.exports = {
     isPair,
     findMe,
     decide,
-    findByName
+    findByName,
+    cardSum
 };
