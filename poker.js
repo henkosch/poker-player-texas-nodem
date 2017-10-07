@@ -134,7 +134,7 @@ function makeBet(gameState, bet) {
     console.log("round ", gameState.round, " : ", "action = ", decision.action, "strategy = ", decision.strategy);
 
     const allInAmount_v0 = 5000;
-    const allInAmount_v1 = gameState.current_buy_in - gameState.players[gameState.in_action].bet + gameState.minimum_raise;
+    //const allInAmount_v1 = gameState.current_buy_in - gameState.players[gameState.in_action].bet + gameState.minimum_raise;
     const allInAmount_v2 = gameState.current_buy_in * 2;
 
     switch (decision.action) {
