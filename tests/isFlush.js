@@ -27,8 +27,8 @@ module.exports = function() {
                             "rank": "Q",
                             "suit": "spades"
                         },
-                    ]
-                ));
+                    ])
+                );
             });
             it('False for not flush', () => {
                 chai.assert.isFalse(
