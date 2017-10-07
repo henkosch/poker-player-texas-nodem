@@ -7,7 +7,7 @@ describe('Poker', () => {
             chai.assert.deepEqual(
                 {
                     action: 'allIn',
-                    strategy: 'concrete'
+                    strategy: 'pair'
                 },
                 poker.decide(
                     {

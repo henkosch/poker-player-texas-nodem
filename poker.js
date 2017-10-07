@@ -80,8 +80,8 @@ function decide(gameState) {
 
     if (isPair(cards)) {
         const sum = cardSum(cards);
-        if ((playerCount == 5 && sum > 16) ||
-            (playerCount == 4 && sum > 16) ||
+        if ((playerCount == 5 && sum > 10) ||
+            (playerCount == 4 && sum > 10) ||
             (playerCount == 3 && sum > 0) ||
             (playerCount == 2 && sum > 0)) {
             return {
