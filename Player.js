@@ -33,25 +33,29 @@ function makeBet(gameState, bet) {
   console.log("ME", me);
 
   const cards = me.hole_cards;
+  const playerCount = gameState.players.length;
+
+  console.log("--- VARIABLES ---");
 
   if (onlyFigures(cards)) console.log("round ", gameState.round, " : ", "onlyFigures");
   if (isPair(cards)) console.log("round ", gameState.round, " : ", "isPair");
   if (sameColor(cards)) console.log("round ", gameState.round, " : ", "sameColor");
   if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
   if (isAcePair(cards)) console.log("round ", gameState.round, " : ", "isAcePair");
+  console.log("round ", gameState.round, " : ", "playerCount", playerCount);
 
   console.log("--- DECIDE ---");
 
   if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
-    if (gameState.players.length <= 3 || isAcePair(cards)) {
-      console.log("round ", gameState.round, " : ", "all in");
+    if (playerCount <= 3 || isAcePair(cards)) {
+      console.log("round ", gameState.round, " : ", "ALL in");
       bet(5000);
     } else {
-      console.log("round ", gameState.round, " : ", "waiting");
+      console.log("round ", gameState.round, " : ", "WAITING for player count");
       bet(0);
     }
   } else {
-    console.log("round ", gameState.round, " : ", "NOT onlyFigures");
+    console.log("round ", gameState.round, " : ", "NOT good");
     bet(0);
   }
 }
