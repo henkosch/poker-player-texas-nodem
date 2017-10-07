@@ -211,6 +211,13 @@ function decide(gameState) {
             };
         }
 
+        if (hasDrill(allCards(gameState))) {
+            return {
+                action: "allIn",
+                strategy: "postFlopDrill"
+            };
+        }
+
         const pairs = getNumRanks(allCards(cards), 2);
         if (pairs.length == 2) {
             return {
