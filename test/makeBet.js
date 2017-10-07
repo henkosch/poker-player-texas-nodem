@@ -40,12 +40,13 @@ describe('Poker', () => {
                         }
                     ],
                     "community_cards": [],
+                    "current_buy_in": 10
                 },
                 (bet) => {
                     return bet;
                 }
             );
-            chai.assert.equal(5000, result);
+            chai.assert.equal(20, result);
         });
     });
 });
