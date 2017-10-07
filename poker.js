@@ -112,7 +112,7 @@ function decide(gameState) {
 
 function makeBet(gameState, bet) {
     debugState(gameState);
-    
+
     const decision = decide(gameState);
 
     console.log("round ", gameState.round, " : ", "action = ", decision.action, "strategy = ", decision.strategy);
@@ -137,5 +137,6 @@ module.exports = {
     isNeighbors,
     sameColor,
     isPair,
-    findMe
+    findMe,
+    decide
 };
