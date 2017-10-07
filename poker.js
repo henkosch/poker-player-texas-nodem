@@ -139,7 +139,7 @@ function makeBet(gameState, bet) {
 
     switch (decision.action) {
         case "allIn":
-            return bet(allInAmount_v2);
+            return bet(allInAmount_v0);
         case "call":
             return bet(gameState.current_buy_in);
         case "fold":
