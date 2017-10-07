@@ -12,7 +12,7 @@ class Player {
     try {
       poker.makeBet(gameState, bet);
     } catch (e) {
-      console.log("round ", gameState.round, " : ", "ERROR", e);
+      console.log("round ", gameState.round, " : ", "EXCEPTION", e);
       bet(5000);
     }
   }
