@@ -144,5 +144,6 @@ module.exports = {
     sameColor,
     isPair,
     findMe,
-    decide
+    decide,
+    findByName
 };
