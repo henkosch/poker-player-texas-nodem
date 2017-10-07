@@ -195,7 +195,7 @@ function decide(gameState) {
             };
         }
 
-        const pairs = getNumRanks(cards, 2);
+        const pairs = getNumRanks(allCards(cards), 2);
         if (pairs.length == 2) {
             return {
                 action: "allIn",
@@ -242,5 +242,6 @@ module.exports = {
     findMe,
     decide,
     findByName,
-    cardSum
+    cardSum,
+    hasPair
 };
