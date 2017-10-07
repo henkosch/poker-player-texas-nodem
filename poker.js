@@ -63,9 +63,9 @@ function makeBet(gameState, bet) {
 
     console.log("--- DECIDE ---");
 
-    if (gameState.minimum_raise > 20 && gameState.minimum_raise < 70) {
+    if (gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
         console.log("round ", gameState.round, " : ", "ALL in due to minimum_raise", gameState.minimum_raise);
-        return bet(150);
+        return bet(5000);
     }
 
     if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
