@@ -7,7 +7,7 @@ function findByName(gameState, name) {
 }
 
 function findMe(gameState) {
-    return findByName('Texas Nodem');
+    return findByName(gameState, 'Texas Nodem');
 }
 
 function isPair(cards) {
