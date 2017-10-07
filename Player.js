@@ -38,6 +38,9 @@ function makeBet(gameState, bet) {
   if (isPair(cards)) console.log("round ", gameState.round, " : ", "isPair");
   if (sameColor(cards)) console.log("round ", gameState.round, " : ", "sameColor");
   if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
+  if (isAcePair(cards)) console.log("round ", gameState.round, " : ", "isAcePair");
+
+  console.log("--- DECIDE ---");
 
   if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
     if (gameState.players.length <= 3 || isAcePair(cards)) {
