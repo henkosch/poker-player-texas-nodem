@@ -104,7 +104,7 @@ function decide(gameState) {
     if (sameColor(cards) && isNeighbors(cards) && playerCount <= 3) {
         return {
             action: "allIn",
-            strategy: "expectFlush"
+            strategy: "expectStraightFlush"
         };
     }
 

@@ -3,11 +3,11 @@ const chai = require('chai');
 
 describe('Poker', () => {
     describe('#decide()', () => {
-        it('Concrete', () => {
+        it('Expect straight flush', () => {
             chai.assert.deepEqual(
                 {
                     action: 'allIn',
-                    strategy: 'concrete'
+                    strategy: 'expectStraightFlush'
                 },
                 poker.decide(
                     {
@@ -19,29 +19,21 @@ describe('Poker', () => {
                             },
                             {
                                 "name": "Sneaky",
-                                "status": "out"
+                                "status": "active"
                             },
                             {
                                 "name": "Texas Nodem",
                                 "status": "active",
                                 "hole_cards": [
                                     {
-                                        "rank": "K",
+                                        "rank": "7",
                                         "suit": "hearts"
                                     },
                                     {
-                                        "rank": "Q",
+                                        "rank": "8",
                                         "suit": "hearts"
                                     }
                                 ]
-                            },
-                            {
-                                "name": "Always all in",
-                                "status": "active"
-                            },
-                            {
-                                "name": "GOgliG",
-                                "status": "out"
                             }
                         ],
                         "community_cards": [],
