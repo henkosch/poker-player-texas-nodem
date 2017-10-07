@@ -74,6 +74,13 @@ function decide(gameState) {
         };
     }
 
+    if (isFlush(allCards(gameState))) {
+        return {
+            action: "allIn",
+            strategy: "flush"
+        };
+    }
+
     if (sameColor(cards) && onlyFigures(cards)) {
         return {
             action: "allIn",
