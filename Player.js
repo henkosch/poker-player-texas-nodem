@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 class Player {
   static get VERSION() {
     return '0.1';
@@ -5,11 +7,13 @@ class Player {
 
   static betRequest(gameState, bet) {
     try {
-      let betAmount = 0;
-      if (gameState.round > 2) {
-        betAmount = 1000;
+      const me = me(gameState);
+      const cards = me.hole_cards;
+      if (onlyFigures(cards)) { 
+        bet(5000);
+      } else {
+        bet(0);
       }
-      bet(betAmount);
     } catch (e) {
       bet(5000);
     }
@@ -20,3 +24,11 @@ class Player {
 }
 
 module.exports = Player;
+
+function me(gameState) {
+  return _.find(gameState.players, player => player.name == 'Texas Nodem');
+}
+
+function onlyFigures(cards) {
+  return _.every(cards, card => isNaN(parseInt(card.rank)) || card.rank == "10");
+}
