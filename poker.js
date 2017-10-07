@@ -171,7 +171,7 @@ function decide(gameState) {
         if (isFlush(allCards(gameState))) {
             return {
                 action: "allIn",
-                strategy: "flush"
+                strategy: "postFlopFlush"
             };
         }
 
@@ -183,7 +183,7 @@ function decide(gameState) {
                 (playerCount == 2 && sum > 0)) {
                 return {
                     action: "allIn",
-                    strategy: "pair"
+                    strategy: "postFlopPair"
                 };
             }
         }
@@ -191,7 +191,7 @@ function decide(gameState) {
         if (!hasPair(gameState.community_cards) && hasPair(allCards(gameState))) {
             return {
                 action: "allIn",
-                strategy: "communityPair"
+                strategy: "postFlopCommunityPair"
             };
         }
 
@@ -199,7 +199,7 @@ function decide(gameState) {
         if (pairs.length == 2) {
             return {
                 action: "allIn",
-                strategy: "twoPairs"
+                strategy: "postFlopTwoPairs"
             };
         }
     }
