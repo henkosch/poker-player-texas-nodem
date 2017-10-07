@@ -63,8 +63,18 @@ function makeBet(gameState, bet) {
 
     console.log("--- DECIDE ---");
 
-    if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
-        if (playerCount <= 4 || isAcePair(cards)) {
+    if (gameState.minimum_raise > 20 && gameState.minimum_raise < 70) {
+        console.log("round ", gameState.round, " : ", "ALL in due to minimum_raise", gameState.minimum_raise);
+        return bet(150);
+    }
+
+    if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
+        console.log("round ", gameState.round, " : ", "ALL in");
+        return bet(5000);
+    }
+
+    if (sameColor(cards) && isNeighbors(cards)) {
+        if (playerCount <= 3 || isAcePair(cards)) {
             console.log("round ", gameState.round, " : ", "ALL in");
             bet(5000);
         } else {
