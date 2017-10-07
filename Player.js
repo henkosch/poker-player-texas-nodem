@@ -20,6 +20,10 @@ function isNeighbors(cards) {
   return Math.abs(index0 - index1);
 }
 
+function isAcePair(cards) {
+  return isPair(cards) && cards[0].rank == "A";
+}
+
 function onlyFigures(cards) {
   return _.every(cards, card => ranks.indexOf(card.rank) > 7);
 }
@@ -36,10 +40,11 @@ function makeBet(gameState, bet) {
   if (isNeighbors(cards)) console.log("round ", gameState.round, " : ", "isNeighbors");
 
   if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
-    if (gameState.players.length <= 3) {
+    if (gameState.players.length <= 3 || isAcePair(cards)) {
       console.log("round ", gameState.round, " : ", "all in");
       bet(5000);
     } else {
+      console.log("round ", gameState.round, " : ", "waiting");
       bet(0);
     }
   } else {
