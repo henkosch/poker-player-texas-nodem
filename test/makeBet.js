@@ -40,6 +40,7 @@ describe('Poker', () => {
                         }
                     ],
                     "community_cards": [],
+                    "current_buy_in": 10
                 },
                 (bet) => {
                     return bet;
