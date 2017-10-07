@@ -52,7 +52,7 @@ class Player {
   }
 
   static betRequest(gameState, bet) {
-    console.log(JSON.stringify(gameState));
+    console.log('gameState', JSON.stringify(gameState));
     try {
       makeBet(gameState, bet);
     } catch (e) {
