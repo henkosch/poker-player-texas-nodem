@@ -218,7 +218,7 @@ function decide(gameState) {
             };
         }
 
-        const pairs = getNumRanks(allCards(cards), 2);
+        const pairs = getNumRanks(allCards(gameState), 2);
         if (pairs.length == 2) {
             return {
                 action: "allIn",
