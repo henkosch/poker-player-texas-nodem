@@ -17,6 +17,7 @@ class Player {
   }
 
   static betRequest(gameState, bet) {
+    console.log(gameState);
     try {
       const me = me(gameState);
       const cards = me.hole_cards;
