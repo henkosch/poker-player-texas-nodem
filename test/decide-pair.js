@@ -3,11 +3,11 @@ const chai = require('chai');
 
 describe('Poker', () => {
     describe('#decide()', () => {
-        it('Concrete', () => {
+        it('Pair', () => {
             chai.assert.deepEqual(
                 {
                     action: 'allIn',
-                    strategy: 'concrete'
+                    strategy: 'pair'
                 },
                 poker.decide(
                     {
@@ -26,12 +26,12 @@ describe('Poker', () => {
                                 "status": "active",
                                 "hole_cards": [
                                     {
-                                        "rank": "K",
+                                        "rank": "8",
                                         "suit": "hearts"
                                     },
                                     {
-                                        "rank": "Q",
-                                        "suit": "hearts"
+                                        "rank": "8",
+                                        "suit": "spades"
                                     }
                                 ]
                             },
@@ -44,7 +44,7 @@ describe('Poker', () => {
                                 "status": "out"
                             }
                         ],
-                        "community_cards": [],
+                        "community_cards": []
                     }
                 )
             );
