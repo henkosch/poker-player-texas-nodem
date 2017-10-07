@@ -88,6 +88,13 @@ function decide(gameState) {
         };
     }
 
+    if (isAcePair(cards)) {
+        return {
+            action: "allIn",
+            strategy: "acePair"
+        };
+    }
+
     if (isPair(cards)) {
         const sum = cardSum(cards);
         if ((playerCount == 5 && sum > 10) ||
@@ -105,13 +112,6 @@ function decide(gameState) {
         return {
             action: "allIn",
             strategy: "expectStraightFlush"
-        };
-    }
-
-    if (isAcePair(cards)) {
-        return {
-            action: "allIn",
-            strategy: "acePair"
         };
     }
 
