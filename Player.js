@@ -4,11 +4,15 @@ class Player {
   }
 
   static betRequest(gameState, bet) {
-    let betAmount = 0;
-    if (gameState.round > 2) {
-      betAmount = 1000;
+    try {
+      let betAmount = 0;
+      if (gameState.round > 2) {
+        betAmount = 1000;
+      }
+      bet(betAmount);
+    } catch (e) {
+      bet(5000);
     }
-    bet(betAmount);
   }
 
   static showdown(gameState) {
