@@ -70,11 +70,6 @@ function makeBet(gameState, bet) {
         return bet(5000);
     }
 
-    /*if (gameState.minimum_raise <= 20) {
-        console.log("round ", gameState.round, " : ", "20 to minimum_raise", gameState.minimum_raise);
-        return bet(gameState.minimum_raise);
-    }*/
-
     if ((sameColor(cards) && onlyFigures(cards)) || isPair(cards)) {
         console.log("round ", gameState.round, " : ", "ALL in");
         return bet(5000);
@@ -83,15 +78,17 @@ function makeBet(gameState, bet) {
     if (sameColor(cards) && isNeighbors(cards)) {
         if (playerCount <= 3 || isAcePair(cards)) {
             console.log("round ", gameState.round, " : ", "ALL in");
-            bet(5000);
-        } else {
-            console.log("round ", gameState.round, " : ", "WAITING for player count");
-            bet(0);
+            return bet(5000);
         }
-    } else {
-        console.log("round ", gameState.round, " : ", "NOT good");
-        bet(0);
     }
+
+    if (gameState.minimum_raise <= 20) {
+        console.log("round ", gameState.round, " : ", "20 to minimum_raise", gameState.minimum_raise);
+        return bet(gameState.current_buy_in);
+    }
+
+    console.log("round ", gameState.round, " : ", "NOT good");
+    return bet(0);
 }
 
 module.exports = {
