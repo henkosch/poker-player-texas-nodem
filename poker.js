@@ -64,7 +64,7 @@ function makeBet(gameState, bet) {
     console.log("--- DECIDE ---");
 
     if (onlyFigures(cards) || isPair(cards) || (sameColor(cards) && isNeighbors(cards))) {
-        if (playerCount <= 3 || isAcePair(cards)) {
+        if (playerCount <= 4 || isAcePair(cards)) {
             console.log("round ", gameState.round, " : ", "ALL in");
             bet(5000);
         } else {
