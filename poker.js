@@ -63,7 +63,9 @@ function makeBet(gameState, bet) {
 
     console.log("--- DECIDE ---");
 
-    if (gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
+    const danger = true;
+
+    if (danger && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
         console.log("round ", gameState.round, " : ", "ALL in due to minimum_raise", gameState.minimum_raise);
         return bet(5000);
     }
