@@ -53,6 +53,10 @@ function isFlush(cards) {
     return false;
 }
 
+function cardsContainsRank(cards, rank) {
+    return cards.some(card => card.rank == rank);
+}
+
 function decide(gameState) {
     console.log("--- DECIDE ---");
 
@@ -62,7 +66,8 @@ function decide(gameState) {
 
     const sneaky = findByName(gameState, 'Sneaky');
     const sneakyActive = sneaky.status == "active";
-    const kamikazeON = !sneakyActive;
+    const kamikazeVeryGoodForUs = cardsContainsRank(cards, "A") || cardsContainsRank(cards, "K");
+    const kamikazeON = !sneakyActive || kamikazeVeryGoodForUs;
 
     if (kamikazeON && gameState.minimum_raise > 20 && gameState.minimum_raise < 250) {
         return {
