@@ -36,11 +36,11 @@ function allCards(gameState) {
 function isFlush(cards) {
     let hash = {};
     cards.forEach(card => {
-        if (hash[card.rank]) hash[card.rank]++;
-        else hash[card.rank] = 1;
+        if (hash[card.suit]) hash[card.suit]++;
+        else hash[card.suit] = 1;
     });
-    for (let rank in hash) {
-        if (hash[rank] >= 5) return true;
+    for (let suit in hash) {
+        if (hash[suit] >= 5) return true;
     }
     return false;
 }
